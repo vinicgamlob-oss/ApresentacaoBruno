@@ -1,0 +1,4 @@
+apresentaçãobrunogof.LeilaoSemPadrao
+apresentaçãobrunogof.UsuarioSimples
+apresentacaobrunosemgof.ApresentacaobrunoSemGoF
+apresentaçãobrunogof.ApresentacaobrunoSemGof
