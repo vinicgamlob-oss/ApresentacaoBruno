@@ -16,7 +16,7 @@ interface PublicadorDeLeilao {
 }
 
 
-// IMPLEMENTS SIGNIFICA : assumir o compromisso de seguir um contrato (a  Interface) TER TUDO QUE A INTERFACE Subject EXIGE
+// IMPLEMENTS SIGNIFICA : assumir o compromisso de seguir um contrato (a  Interface) TER TUDO QUE A INTERFACE PublicadorDeLeilao EXIGE
 
 // Classe Leilao implementando o contrato do Publicador
 
@@ -50,7 +50,7 @@ class Leilao implements PublicadorDeLeilao {
 }
 
 // Classe Usuario implementando Licitante (SEGUINDO TODOS OS REQUISITOS )
-class Usuario implements Licitante {
+class Usuario implements Licitante { // O USUÁRIO É UM LICITANTE (CONTRATO)
     private String nome;
 
     public Usuario(String nome) {
