@@ -1,43 +1,43 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
 package apresentaçãobrunogof;
-
 
 import java.util.ArrayList;
 import java.util.List;
 
-// Interface Observer
-interface Observer {
+
+interface Licitante {
     void update(String mensagem);
 }
 
-// Interface Subject CONTRATO (MOLDE) (NOME BOTAO)
-interface Subject {
-    void adicionarObserver(Observer o);
-    void removerObserver(Observer o);
-    void notificarObservers();
+  // INTERFACE  =  CONTRATO (MOLDE) (NOME BOTAO)
+interface PublicadorDeLeilao {
+    void adicionarLicitante(Licitante o); 
+    void removerLicitante(Licitante o);
+    void notificarLicitante();
 }
 
-// ConcreteSubject   IMPLEMENTS SIGNIFICA : assumir o compromisso de seguir um contrato (a  Interface)
-class Leilao implements Subject {
-    private List<Observer> observers = new ArrayList<>();
+
+// IMPLEMENTS SIGNIFICA : assumir o compromisso de seguir um contrato (a  Interface) TER TUDO QUE A INTERFACE Subject EXIGE
+
+// Classe Leilao implementando o contrato do Publicador
+
+class Leilao implements PublicadorDeLeilao {
+ 
+    private List<Licitante> observers = new ArrayList<>();
     private double maiorLance;
 
-    @Override
-    public void adicionarObserver(Observer o) {
+    @Override  // SOBREESCREVER 
+    public void adicionarLicitante(Licitante o) {
         observers.add(o);
     }
 
     @Override
-    public void removerObserver(Observer o) {
+    public void removerLicitante(Licitante o) {
         observers.remove(o);
     }
 
     @Override
-    public void notificarObservers() {
-        for (Observer o : observers) {
+    public void notificarLicitante() {
+        for (Licitante o : observers) {  // FOR-EACH 
             o.update("Novo lance: R$ " + maiorLance);
         }
     }
@@ -45,12 +45,12 @@ class Leilao implements Subject {
     public void novoLance(double valor) {
         this.maiorLance = valor;
         System.out.println("\n Novo lance registrado: R$ " + valor);
-        notificarObservers();
+        notificarLicitante();
     }
 }
 
-// ConcreteObserver
-class Usuario implements Observer {
+// Classe Usuario implementando Licitante (SEGUINDO TODOS OS REQUISITOS )
+class Usuario implements Licitante {
     private String nome;
 
     public Usuario(String nome) {
@@ -59,33 +59,30 @@ class Usuario implements Observer {
 
     @Override
     public void update(String mensagem) {
-        System.out.println(nome + " recebeu notificacao " + mensagem);
+        System.out.println(nome + " recebeu notificacao: " + mensagem);
+    }
+    
+    // O diagrama mostra esse método na classe Usuario
+    public void receberNotificacao() {
+        // Lógica extra se necessário
     }
 }
 
-// Classe principal
+// Classe Principal
 public class ApresentaçãobrunoGof {
     public static void main(String[] args) {
-
         Leilao leilao = new Leilao();
 
         Usuario u1 = new Usuario("Lis");
         Usuario u2 = new Usuario("Joao");
         Usuario u3 = new Usuario("Maria");
 
-        // Inscrevendo observadores
-        leilao.adicionarObserver(u1);
-        leilao.adicionarObserver(u2);
-        leilao.adicionarObserver(u3);
+        leilao.adicionarLicitante(u1);
+        leilao.adicionarLicitante(u2);
+        leilao.adicionarLicitante(u3);
 
-        // Simulando lances
         leilao.novoLance(100);
-        leilao.novoLance(150);
-
-        // Removendo um usuário
-        leilao.removerObserver(u2);
-
+        leilao.removerLicitante(u2);
         leilao.novoLance(200);
     }
 }
-
