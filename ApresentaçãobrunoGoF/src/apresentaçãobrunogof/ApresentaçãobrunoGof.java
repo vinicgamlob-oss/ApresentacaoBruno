@@ -13,14 +13,14 @@ interface Observer {
     void update(String mensagem);
 }
 
-// Interface Subject
+// Interface Subject CONTRATO (MOLDE) (NOME BOTAO)
 interface Subject {
     void adicionarObserver(Observer o);
     void removerObserver(Observer o);
     void notificarObservers();
 }
 
-// ConcreteSubject
+// ConcreteSubject   IMPLEMENTS SIGNIFICA : assumir o compromisso de seguir um contrato (a  Interface)
 class Leilao implements Subject {
     private List<Observer> observers = new ArrayList<>();
     private double maiorLance;
