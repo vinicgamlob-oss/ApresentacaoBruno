@@ -3,12 +3,16 @@ package apresentaçãobrunogof;
 import java.util.ArrayList;
 import java.util.List;
 
-
+// ABSTRAÇÃO (CONTRATO): Não importa quem é o objeto, 
+// desde que ele saiba reagir ao método 'update'.
 interface Licitante {
     void update(String mensagem);
 }
+//No Código 1 o usuário é um tipo fixo, no Código 2 o usuário é um comportamento padronizado.
 
   // INTERFACE  =  CONTRATO (MOLDE) (NOME BOTAO)
+  // PADRONIZAÇÃO: Define como qualquer leilão deve se comportar 
+// (adicionar, remover e notificar).
 interface PublicadorDeLeilao {
     void adicionarLicitante(Licitante o); 
     void removerLicitante(Licitante o);
@@ -21,6 +25,9 @@ interface PublicadorDeLeilao {
 // Classe Leilao implementando o contrato do Publicador
 
 class Leilao implements PublicadorDeLeilao {
+
+    // ACOPLAMENTO FRACO: A lista aceita QUALQUER coisa que seja um 'Licitante'.
+    // Pode ser Pessoa, Empresa, Robô, App, etc.
  
     private List<Licitante> observers = new ArrayList<>();
     private double maiorLance;
@@ -37,6 +44,9 @@ class Leilao implements PublicadorDeLeilao {
 
     @Override
     public void notificarLicitante() {
+        // POLIMORFISMO: O leilão avisa todo mundo de forma genérica.
+        // Ele não precisa saber os detalhes internos de cada licitante.
+
         for (Licitante o : observers) {  // FOR-EACH 
             o.update("Novo lance: R$ " + maiorLance);
         }
@@ -50,6 +60,7 @@ class Leilao implements PublicadorDeLeilao {
 }
 
 // Classe Usuario implementando Licitante (SEGUINDO TODOS OS REQUISITOS )
+// IMPLEMENTAÇÃO: O Usuario agora assina o contrato de Licitante.
 class Usuario implements Licitante { // O USUÁRIO É UM LICITANTE (CONTRATO)
     private String nome;
 
@@ -70,6 +81,8 @@ class Usuario implements Licitante { // O USUÁRIO É UM LICITANTE (CONTRATO)
 
 // Classe Principal
 public class ApresentaçãobrunoGof {
+
+    // Cada classe decide como quer tratar a atualização recebida.
     public static void main(String[] args) {
         Leilao leilao = new Leilao();
 
@@ -86,3 +99,10 @@ public class ApresentaçãobrunoGof {
         leilao.novoLance(200);
     }
 }
+
+// O Usuário agora é "disfarçado" de Licitante.
+// O Leilão não vê mais um "João" ou uma "Maria", ele vê um "Objeto que sabe dar update".
+// Isso permite que o sistema seja Genérico:
+// Você pode ter Usuário, Robô, App de Celular ou Sistema de Log na mesma lista,
+// pois para o Leilão, todos eles são apenas "Licitantes".
+
