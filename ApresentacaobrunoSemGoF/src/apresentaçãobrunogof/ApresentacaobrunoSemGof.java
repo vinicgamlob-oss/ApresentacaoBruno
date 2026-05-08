@@ -11,7 +11,8 @@ class UsuarioSimples {
     public UsuarioSimples(String nome) {
         this.nome = nome;
     }
-
+// O usuário tem um método específico para receber notificações, 
+// mas o leilão precisa conhecer esse método para funcionar.
     public void avisar(String mensagem) {
         System.out.println(nome + " recebeu notificacao: " + mensagem);
     }
@@ -24,19 +25,19 @@ class LeilaoSemPadrao {
     // Note que aqui estamos presos à classe UsuarioSimples
     private List<UsuarioSimples> usuarios = new ArrayList<>();
     private double maiorLance;
-
+// O Leilão precisa conhecer a estrutura exata do usuário para notificá-lo.
     public void cadastrarUsuario(UsuarioSimples u) {
         usuarios.add(u);
     }
-
+// O Leilão precisa conhecer a estrutura exata do usuário para removê-lo.
     public void excluirUsuario(UsuarioSimples u) {
         usuarios.remove(u);
     }
-
+// O Leilão precisa conhecer a estrutura exata do usuário para notificá-lo.
     public void novoLance(double valor) {
         this.maiorLance = valor;
         System.out.println("\n Novo lance registrado: R$ " + valor);
-        
+//        
         // O Leilao "sabe" exatamente como notificar o usuario
         for (UsuarioSimples u : usuarios) {
             u.avisar("Novo lance: R$ " + maiorLance);
